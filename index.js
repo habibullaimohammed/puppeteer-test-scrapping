@@ -19,7 +19,7 @@ const categories = [
 ];
 
 async function scrapeData(url) {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: "new" });
     const page = await browser.newPage();
     await page.setDefaultTimeout(TIMEOUT); // Set the timeout for each page
 
