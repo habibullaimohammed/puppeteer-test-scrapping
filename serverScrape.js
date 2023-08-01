@@ -1,15 +1,14 @@
-const puppeteer = require('puppeteer ');
+const puppeteer = require('puppeteer');
 const fs = require('fs');
-const path = require('path');
 
 async function serverScrape() {
-    const OUTPUT_FILE = 'serverJson.json';
+    const BASE_URL = 'https://igetintopc.com/category/2d-designing/';
+    const OUTPUT_FILE = 'scraped_data_scrapped.json';
+
+    const browser = await puppeteer.launch({ headless: false, timeout: 120000 });
+    const page = await browser.newPage();
     const scrapedData = {};
 
-    const browser = await puppeteer.launch({
-        headless: false,
-    })
-    const page = browser.newPage();
     async function scrapePage(url, category) {
         await page.goto(url);
         const data = await page.evaluate(category => {
@@ -72,4 +71,6 @@ async function serverScrape() {
     }
 }
 
-serverScrape()
+// Call the function to initiate the scraping process
+serverScrape();
+
