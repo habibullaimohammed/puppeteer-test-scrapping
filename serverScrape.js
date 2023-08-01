@@ -1,11 +1,23 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
+require("dotenv").config();
 
 async function serverScrape() {
-    const BASE_URL = 'https://igetintopc.com/category/2d-designing/';
     const OUTPUT_FILE = 'scraped_data_scrapped.json';
 
-    const browser = await puppeteer.launch({ headless: false, timeout: 120000 });
+    const browser = await puppeteer.launch({
+        headless: "new",
+        args: [
+            "--disable-setuid-sandbox",
+            "--no-sandbox",
+            "--single-process",
+            "--no-zygote",
+        ],
+        executablePath:
+            process.env.NODE_ENV === "production"
+                ? process.env.PUPPETEER_EXECUTABLE_PATH
+                : puppeteer.executablePath(),
+    });
     const page = await browser.newPage();
     const scrapedData = {};
 
